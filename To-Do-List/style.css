@@ -1,0 +1,1280 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@400;600&display=swap');
+
+:root {
+    /* Light theme variables */
+    --primary-color: #ff00cc;
+    --secondary-color: #3333ff;
+    --accent-color: #ffcc00;
+    --text-color: #ffffff;
+    --background-color: rgba(25, 25, 35, 0.85);
+    --body-bg: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+    --item-bg-color: rgba(60, 60, 80, 0.6);
+    --completed-color: rgba(0, 255, 128, 0.2);
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --button-gradient: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    --notification-bg: rgba(40, 40, 60, 0.9);
+    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --snooze-btn-bg: rgba(255, 204, 0, 0.8);
+    --select-bg: rgba(255, 255, 255, 0.15);
+    --test-btn-bg: rgba(255, 204, 0, 0.7);
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+    --primary-color: #ff3399;
+    --secondary-color: #6600ff;
+    --accent-color: #ffcc00;
+    --text-color: #ffffff;
+    --background-color: rgba(15, 15, 20, 0.9);
+    --body-bg: linear-gradient(45deg, #000428, #004e92);
+    --item-bg-color: rgba(30, 30, 40, 0.8);
+    --completed-color: rgba(0, 128, 64, 0.3);
+    --input-bg: rgba(30, 30, 40, 0.5);
+    --button-gradient: linear-gradient(to right, #ff3399, #6600ff);
+    --notification-bg: rgba(20, 20, 30, 0.95);
+    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --snooze-btn-bg: rgba(204, 163, 0, 0.8);
+    --select-bg: rgba(30, 30, 40, 0.8);
+    --test-btn-bg: rgba(204, 163, 0, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--body-bg);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    transition: background 0.5s ease;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Theme toggle */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.theme-toggle button {
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle button i {
+    content: "\f185";
+}
+
+[data-theme="dark"] .theme-toggle button i.fa-moon:before {
+    content: "\f185";
+}
+
+/* Animated background shapes */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.animated-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.6;
+}
+
+.shape1 {
+    width: 400px;
+    height: 400px;
+    background: var(--primary-color);
+    top: -100px;
+    left: -100px;
+    animation: float 20s ease-in-out infinite;
+}
+
+.shape2 {
+    width: 300px;
+    height: 300px;
+    background: var(--secondary-color);
+    bottom: -80px;
+    right: -50px;
+    animation: float 15s ease-in-out infinite reverse;
+}
+
+.shape3 {
+    width: 200px;
+    height: 200px;
+    background: var(--accent-color);
+    bottom: 30%;
+    left: 10%;
+    animation: float 18s ease-in-out infinite 2s;
+}
+
+.shape4 {
+    width: 250px;
+    height: 250px;
+    background: #00ffcc;
+    top: 20%;
+    right: 10%;
+    animation: float 24s ease-in-out infinite 1s reverse;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(100px, 50px) rotate(90deg);
+    }
+    50% {
+        transform: translate(50px, 100px) rotate(180deg);
+    }
+    75% {
+        transform: translate(-50px, 50px) rotate(270deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}
+
+.container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: var(--background-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: appear 0.5s ease-out;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    overflow: visible;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.funky-title {
+    font-family: 'Righteous', cursive;
+    text-align: center;
+    margin-bottom: 25px;
+    color: transparent;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+    animation: color-rotation 5s infinite linear;
+}
+
+@keyframes color-rotation {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.todo-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    gap: 10px;
+    overflow: visible;
+}
+
+.task-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    overflow: visible;
+}
+
+.option {
+    flex: 1;
+    min-width: 200px;
+}
+
+.sound-option {
+    z-index: 20;
+    position: relative;
+}
+
+.sound-selector {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    position: relative;
+}
+
+.option label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+#taskInput, #alarmTime, #alarmSound, #snoozeTime {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+#alarmSound {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--select-bg);
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+    position: relative;
+}
+
+.test-sound-btn {
+    background-color: var(--test-btn-bg);
+    border: none;
+    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.test-sound-btn:hover {
+    transform: scale(1.05);
+    background-color: var(--accent-color);
+}
+
+.test-sound-btn:active {
+    transform: scale(0.95);
+}
+
+#taskInput:focus, #alarmTime:focus, #alarmSound:focus, #snoozeTime:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 0, 204, 0.3);
+}
+
+#addBtn {
+    padding: 12px 25px;
+    background: var(--button-gradient);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 0, 204, 0.3);
+    margin-top: 10px;
+}
+
+#addBtn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 7px 20px rgba(255, 0, 204, 0.4);
+}
+
+#addBtn:active {
+    transform: translateY(1px);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-btn.active {
+    background-color: var(--accent-color);
+    color: #333;
+    font-weight: bold;
+}
+
+.todo-list {
+    list-style-type: none;
+    perspective: 1000px;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: var(--item-bg-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slide-in 0.4s ease-out forwards;
+    transform-origin: center;
+    position: relative;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(-20px) rotateX(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) rotateX(0);
+    }
+}
+
+.todo-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+}
+
+.todo-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.todo-item.completed {
+    background-color: var(--completed-color);
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.todo-item.completed::before {
+    background: linear-gradient(to bottom, #00c853, #64dd17);
+}
+
+.todo-item-text {
+    flex: 1;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.todo-item-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.todo-item-time {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-sound {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-time i, .todo-item-sound i {
+    margin-right: 5px;
+    color: var(--accent-color);
+}
+
+.todo-item-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.todo-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.complete-btn {
+    background-color: rgba(0, 200, 83, 0.3);
+}
+
+.complete-btn:hover {
+    background-color: rgba(0, 200, 83, 0.5);
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    background-color: rgba(231, 76, 60, 0.3);
+}
+
+.delete-btn:hover {
+    background-color: rgba(231, 76, 60, 0.5);
+    transform: scale(1.1);
+}
+
+.notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-content {
+    background: var(--notification-bg);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 90%;
+    width: 400px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.notification.show .notification-content {
+    transform: scale(1);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 204, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 0, 204, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 204, 0);
+    }
+}
+
+.notification h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    font-family: 'Righteous', cursive;
+}
+
+#notification-message {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.notification-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.snooze-options {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    z-index: 20;
+}
+
+#snoozeTime {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--select-bg);
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+    position: relative;
+    z-index: 15;
+}
+
+#snooze-btn {
+    background-color: var(--snooze-btn-bg);
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+#snooze-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+#notification-close {
+    background: var(--button-gradient);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+#notification-close:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(255, 0, 204, 0.3);
+}
+
+/* Vibration effect animation */
+@keyframes vibrate {
+    0%, 100% { transform: translate(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-2px); }
+    20%, 40%, 60%, 80% { transform: translate(2px); }
+}
+
+.vibrate {
+    animation: vibrate 0.3s linear infinite;
+}
+
+/* Sound playing animation */
+@keyframes soundWave {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+}
+
+.playing {
+    animation: soundWave 1s ease infinite;
+    color: var(--accent-color) !important;
+}
+
+/* Edit Alarm Button */
+.edit-alarm-btn {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 5px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.edit-alarm-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Edit Alarm Modal */
+.edit-alarm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.edit-alarm-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.edit-alarm-content {
+    background: var(--background-color);
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 90%;
+    width: 400px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-alarm-modal.show .edit-alarm-content {
+    transform: scale(1);
+}
+
+.edit-alarm-content h3 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+    font-size: 1.5rem;
+}
+
+.edit-alarm-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.form-group .sound-selector {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-alarm-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#updateAlarmBtn, #cancelEditBtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#updateAlarmBtn {
+    background: var(--button-gradient);
+    color: white;
+    flex: 1.5;
+}
+
+#updateAlarmBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 204, 0.3);
+}
+
+#cancelEditBtn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-color);
+    flex: 1;
+}
+
+#cancelEditBtn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Temporary Notification */
+.temp-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: var(--notification-bg);
+    color: var(--text-color);
+    padding: 12px 25px;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1100;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-align: center;
+    max-width: 80%;
+}
+
+.temp-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Responsive design for modal */
+@media (max-width: 650px) {
+    .edit-alarm-content {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    .edit-alarm-form {
+        gap: 15px;
+    }
+    
+    #updateAlarmBtn, #cancelEditBtn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .temp-notification {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 650px) {
+    .container {
+        margin: 15px;
+        width: auto;
+        padding: 20px;
+    }
+    
+    .funky-title {
+        font-size: 2rem;
+    }
+    
+    .todo-input {
+        flex-direction: column;
+    }
+    
+    .task-options {
+        flex-direction: column;
+    }
+    
+    .option {
+        width: 100%;
+    }
+    
+    #taskInput, #alarmTime, #alarmSound, #addBtn {
+        width: 100%;
+        font-size: 14px;
+    }
+    
+    .sound-selector {
+        width: 100%;
+    }
+    
+    .test-sound-btn {
+        height: 38px;
+        width: 38px;
+    }
+    
+    .filter-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    
+    .todo-item {
+        flex-wrap: wrap;
+    }
+    
+    .todo-item-text {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .todo-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .snooze-options {
+        flex-direction: column;
+    }
+}
+
+/* Protocol Warning Dialog */
+.protocol-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.protocol-warning.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.protocol-warning-content {
+    background: var(--background-color);
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 90%;
+    width: 450px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.protocol-warning.show .protocol-warning-content {
+    transform: scale(1);
+}
+
+.protocol-warning h3 {
+    color: #ffcc00;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    font-family: 'Righteous', cursive;
+}
+
+.server-options {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: left;
+}
+
+.server-options p {
+    margin-bottom: 10px;
+    color: var(--accent-color);
+}
+
+code {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #00ffcc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    display: inline-block;
+    margin: 5px;
+}
+
+#closeWarningBtn {
+    background: var(--button-gradient);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+#closeWarningBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 204, 0.3);
+}
+
+/* Audio error fallback */
+.audio-error {
+    background-color: rgba(231, 76, 60, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Security enhancements */
+.user-content {
+    /* Apply to any user-generated content displayed in the UI */
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Prevent text selection on key UI elements for casual security */
+.todo-btn, .filter-btn, .funky-title, .edit-alarm-btn {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+@media (max-width: 650px) {
+    .protocol-warning-content {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    .protocol-warning h3 {
+        font-size: 1.4rem;
+    }
+    
+    code {
+        font-size: 0.9rem;
+        display: block;
+        margin: 8px 0;
+    }
+}
+
+/* Date Picker Wrapper and Buttons */
+.date-picker-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.date-picker-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.date-btn {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.date-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.date-btn i {
+    font-size: 0.85rem;
+}
+
+#clearDateBtn {
+    background-color: rgba(231, 76, 60, 0.3);
+}
+
+#clearDateBtn:hover {
+    background-color: rgba(231, 76, 60, 0.5);
+}
+
+#selectDateBtn {
+    background-color: rgba(46, 204, 113, 0.3);
+}
+
+#selectDateBtn:hover {
+    background-color: rgba(46, 204, 113, 0.5);
+}
+
+/* Custom Date Time Picker Modal */
+.date-picker-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.date-picker-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.date-picker-modal-content {
+    background: var(--background-color);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.date-picker-modal.show .date-picker-modal-content {
+    transform: scale(1);
+}
+
+.date-picker-modal h3 {
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.date-time-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.date-input-group, .time-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-input-group label, .time-input-group label {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+#datePicker, #timePicker {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+#datePicker:focus, #timePicker:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+}
+
+/* Style the date inputs better for all browsers */
+input[type="date"], input[type="time"], input[type="datetime-local"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    position: relative;
+}
+
+/* Date input hover and focus effects */
+input[type="date"]:hover, input[type="time"]:hover, input[type="datetime-local"]:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Custom calendar icon for date inputs */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    background-color: var(--accent-color);
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* Modal buttons */
+.date-picker-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+#cancelDateBtn, #confirmDateBtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 1;
+    transition: all 0.3s ease;
+}
+
+#cancelDateBtn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-color);
+}
+
+#cancelDateBtn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+#confirmDateBtn {
+    background: var(--button-gradient);
+    color: white;
+}
+
+#confirmDateBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 0, 204, 0.3);
+}
+
+/* Make inputs more touch-friendly */
+@media (hover: none) and (pointer: coarse) {
+    .date-btn, #cancelDateBtn, #confirmDateBtn {
+        padding: 12px 20px; /* Larger touch targets */
+    }
+    
+    #datePicker, #timePicker, input[type="datetime-local"] {
+        font-size: 16px; /* Prevent zoom on mobile */
+        padding: 12px 15px;
+    }
+    
+    /* Improve tap targets */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        width: 24px;
+        height: 24px;
+        padding: 8px;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 650px) {
+    .date-time-inputs {
+        flex-direction: column;
+    }
+    
+    .date-picker-buttons {
+        flex-direction: row;
+    }
+    
+    .date-btn {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+}
+
+/* Ensure dropdowns are fully visible */
+select {
+    position: relative;
+    z-index: 15;
+}
+
+select:focus {
+    z-index: 25; /* Higher z-index when focused */
+}
+
+/* Fix for dropdown options visibility */
+select option {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 10px;
+    font-size: 1rem;
+}
+
+/* Fix for dropdown positioning in various browsers */
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+    select {
+        overflow: visible !important;
+    }
+    
+    select:focus {
+        overflow: visible !important;
+        box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.5);
+    }
+} 

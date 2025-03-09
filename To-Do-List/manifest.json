@@ -1,0 +1,39 @@
+{
+  "name": "Funky To-Do List",
+  "short_name": "FunkyToDo",
+  "description": "A vibrant, animated to-do list app with task alarms, custom sounds, and visual effects",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#12c2e9",
+  "theme_color": "#ff00cc",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add New Task",
+      "short_name": "Add Task",
+      "description": "Quickly add a new task to your list",
+      "url": "/index.html?action=new"
+    }
+  ]
+} 

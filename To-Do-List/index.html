@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funky To-Do List App</title>
+    <!-- Updated CSP to allow necessary resources while maintaining security -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+        script-src 'self' 'unsafe-inline';
+        font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:;
+        img-src 'self' data: blob:;
+        media-src 'self' https://assets.mixkit.co data: blob:;
+        connect-src 'self';
+    ">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@400;600&display=swap">
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+    <meta name="theme-color" content="#ff00cc">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="basic.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="animated-shape shape1"></div>
+        <div class="animated-shape shape2"></div>
+        <div class="animated-shape shape3"></div>
+        <div class="animated-shape shape4"></div>
+    </div>
+    
+    <div class="theme-toggle">
+        <button id="themeToggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    
+    <div class="container">
+        <h1 class="funky-title">Funky To-Do List</h1>
+        
+        <div style="text-align: center; margin-bottom: 10px;">
+            <a href="fallback.html" style="font-size: 12px; color: #666;">
+                ⚠️ Having issues? Try the simple version
+            </a>
+        </div>
+        
+        <div id="appFixContainer" style="display: none; text-align: center; margin-bottom: 20px; padding: 15px; background-color: rgba(255, 0, 0, 0.1); border-radius: 8px;">
+            <p style="margin-bottom: 10px;">App functionality issues detected!</p>
+            <button id="fixAppBtn" style="padding: 8px 15px; background-color: #ff3399; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Fix App
+            </button>
+        </div>
+        
+        <div class="todo-input">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <div class="task-options">
+                <div class="option">
+                    <label for="alarmTime">Alarm:</label>
+                    <div class="date-picker-wrapper">
+                        <input type="datetime-local" id="alarmTime">
+                        <div class="date-picker-buttons">
+                            <button type="button" id="clearDateBtn" class="date-btn">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                            <button type="button" id="selectDateBtn" class="date-btn">
+                                <i class="fas fa-check"></i> Set Date
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="option sound-option">
+                    <label for="alarmSound">Sound:</label>
+                    <div class="sound-selector">
+                        <select id="alarmSound">
+                            <option value="sound1">Classic Beep</option>
+                            <option value="sound2">Fun Chime</option>
+                            <option value="sound3">Funky Beat</option>
+                            <option value="sound4">Alert Buzz</option>
+                            <option value="sound5">Gentle Bell</option>
+                        </select>
+                        <button id="testSoundBtn" class="test-sound-btn" title="Test Sound">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button id="addBtn">Add Task</button>
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="alarm">With Alarm</button>
+        </div>
+        
+        <ul id="taskList" class="todo-list">
+            <!-- Tasks will be added here dynamically -->
+        </ul>
+    </div>
+    
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <h3>Task Reminder!</h3>
+            <p id="notification-message"></p>
+            <div class="notification-actions">
+                <div class="snooze-options">
+                    <select id="snoozeTime">
+                        <option value="5">Snooze 5 min</option>
+                        <option value="10">Snooze 10 min</option>
+                        <option value="15">Snooze 15 min</option>
+                    </select>
+                    <button id="snooze-btn">Snooze</button>
+                </div>
+                <button id="notification-close">Dismiss</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom date-time picker modal -->
+    <div id="datePickerModal" class="date-picker-modal">
+        <div class="date-picker-modal-content">
+            <h3>Select Date & Time</h3>
+            <div class="date-time-inputs">
+                <div class="date-input-group">
+                    <label for="datePicker">Date:</label>
+                    <input type="date" id="datePicker">
+                </div>
+                <div class="time-input-group">
+                    <label for="timePicker">Time:</label>
+                    <input type="time" id="timePicker">
+                </div>
+            </div>
+            <div class="date-picker-modal-buttons">
+                <button id="cancelDateBtn">Cancel</button>
+                <button id="confirmDateBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements with local fallbacks -->
+    <div id="audioErrorContainer" class="audio-error-container"></div>
+    <audio id="sound1" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+        <source src="sounds/beep.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound2" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-notification-chime-1799.mp3" type="audio/mpeg">
+        <source src="sounds/chime.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound3" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-fun-toy-music-notification-508.mp3" type="audio/mpeg">
+        <source src="sounds/music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound4" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alert-quick-chime-766.mp3" type="audio/mpeg">
+        <source src="sounds/alert.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound5" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3" type="audio/mpeg">
+        <source src="sounds/bell.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Development server notice -->
+    <div id="protocolWarning" class="protocol-warning">
+        <div class="protocol-warning-content">
+            <h3>⚠️ Local Development</h3>
+            <p>This app must run on a web server to function correctly.</p>
+            <div class="server-options">
+                <p>Quick options to run locally:</p>
+                <code>python -m http.server</code> or 
+                <code>npx serve</code>
+            </div>
+            <p>App issues will occur if opened directly with file:// protocol due to CORS and CSP restrictions.</p>
+            <button id="closeWarningBtn">Understood</button>
+        </div>
+    </div>
+    
+    <script src="core.js"></script>
+    <script src="script.js"></script>
+    <script>
+        /**
+         * Checks if the app is running on a supported protocol (http/https)
+         * Shows warning if using file:// protocol
+         * 
+         * @returns {boolean} True if running on supported protocol
+         */
+        function checkProtocol() {
+            const protocol = window.location.protocol;
+            const isValidProtocol = protocol === 'http:' || protocol === 'https:';
+            const warningElement = document.getElementById('protocolWarning');
+            
+            if (!isValidProtocol) {
+                if (warningElement) {
+                    warningElement.classList.add('show');
+                    
+                    // Add event listener to close button
+                    const closeBtn = document.getElementById('closeWarningBtn');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', () => {
+                            warningElement.classList.remove('show');
+                        });
+                    }
+                }
+                
+                console.warn(`App is running via ${protocol} protocol. Service Worker, audio, and other features may not work correctly.`);
+                
+                // Force core functionality mode
+                try {
+                    // Disable advanced features
+                    const advancedElements = [
+                        document.getElementById('datePickerModal'),
+                        document.getElementById('notification')
+                    ];
+                    
+                    advancedElements.forEach(el => {
+                        if (el) el.style.display = 'none';
+                    });
+                    
+                    // Show restricted mode message
+                    const message = document.createElement('div');
+                    message.style.padding = '10px';
+                    message.style.marginBottom = '15px';
+                    message.style.backgroundColor = 'rgba(255, 165, 0, 0.2)';
+                    message.style.borderRadius = '4px';
+                    message.style.textAlign = 'center';
+                    message.innerHTML = '<strong>⚠️ Running in restricted mode</strong><br>Advanced features disabled. To enable all features, please run on a web server.';
+                    
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.insertBefore(message, container.firstChild);
+                    }
+                } catch (e) {
+                    console.error('Failed to setup restricted mode:', e);
+                }
+                
+                return false;
+            }
+            return true;
+        }
+        
+        /**
+         * Registers the service worker for offline functionality
+         * Only registers on http/https protocols to prevent errors
+         */
+        function registerServiceWorker() {
+            if (!checkProtocol()) return;
+            
+            if ('serviceWorker' in navigator) {
+                // Delay registration slightly to prioritize app loading
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./service-worker.js', {
+                        scope: './'
+                    })
+                    .then(reg => {
+                        console.log('Service Worker registered successfully', reg);
+                    })
+                    .catch(err => {
+                        console.error('Service Worker registration failed:', err);
+                        // Create error notification for users
+                        const errorElem = document.createElement('div');
+                        errorElem.className = 'audio-error';
+                        errorElem.textContent = 'Service Worker failed. Some offline features may not work.';
+                        document.getElementById('audioErrorContainer').appendChild(errorElem);
+                        
+                        setTimeout(() => {
+                            errorElem.remove();
+                        }, 5000);
+                    });
+                });
+            }
+        }
+        
+        // Initialize the app
+        registerServiceWorker();
+
+        // Add this script to check if app is working and show fix button if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if add button is working after 3 seconds
+            setTimeout(function() {
+                const addBtn = document.getElementById('addBtn');
+                const fixContainer = document.getElementById('appFixContainer');
+                
+                if (addBtn && typeof addBtn.onclick !== 'function' && !addBtn._hasClickListener) {
+                    console.warn('Add button not functioning, showing fix option');
+                    if (fixContainer) {
+                        fixContainer.style.display = 'block';
+                        
+                        document.getElementById('fixAppBtn').addEventListener('click', function() {
+                            console.log('Attempting to reinitialize app...');
+                            initializeCoreApp();
+                            fixContainer.style.display = 'none';
+                        });
+                    }
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html> 

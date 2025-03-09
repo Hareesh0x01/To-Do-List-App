@@ -1,0 +1,14 @@
+To complete the PWA setup, add the following icon files to this folder:
+
+1. icon-192x192.png - 192x192 pixel app icon
+2. icon-512x512.png - 512x512 pixel app icon
+
+You can create these icons using any image editing software with a funky, colorful design that matches the app's style.
+
+For optimal appearance:
+- Use a transparent background
+- Ensure the design is recognizable at small sizes
+- Use vibrant colors from the app's color scheme
+- Make sure the design has enough padding around the edges
+
+These icons will be used when installing the app on devices and for browser shortcuts. 
